@@ -81,7 +81,7 @@ function selectAction(action) {
 function pressKey(num) {
     if (currentAction === 'withdraw' || currentAction === 'deposit') {
         inputValue += num;
-        screenInput.innerHTML = "$" + inputValue;
+        screenInput.innerHTML = "₹" + inputValue;
     } else if (currentAction === 'pin') {
         if(inputValue.length < 4) {
             inputValue += num;
@@ -123,7 +123,7 @@ function submitInput() {
     } 
     else if (currentAction === 'deposit') {
         accountBalance += amount;
-        screenMsg.innerHTML = `<span style='color: #00ff00;'>$${amount} DEPOSITED SUCCESSFULLY.</span>`;
+        screenMsg.innerHTML = `<span style='color: #00ff00;'>₹₹{amount} DEPOSITED SUCCESSFULLY.</span>`;
         screenInput.innerHTML = "";
     }
     else if (currentAction === 'pin') {
@@ -151,7 +151,7 @@ function toggleBalance() {
 }
 
 function renderBalance() {
-    const displayAmount = isBalanceVisible ? `$${accountBalance}` : "****";
+    const displayAmount = isBalanceVisible ? `₹₹{accountBalance}` : "****";
     const iconClass = isBalanceVisible ? "fa-eye-slash" : "fa-eye";
     
     screenMsg.innerHTML = `AVAILABLE BALANCE:<br><br>
@@ -163,11 +163,11 @@ function showMiniStatement() {
     screenMsg.innerHTML = `
         <table class="statement-table">
             <tr><th>Date</th><th>Type</th><th>Amount</th></tr>
-            <tr><td>12-Oct</td><td>WDL</td><td>$200</td></tr>
-            <tr><td>10-Oct</td><td>DEP</td><td>$1000</td></tr>
-            <tr><td>05-Oct</td><td>WDL</td><td>$50</td></tr>
+            <tr><td>12-Oct</td><td>WDL</td><td>₹200</td></tr>
+            <tr><td>10-Oct</td><td>DEP</td><td>₹1000</td></tr>
+            <tr><td>05-Oct</td><td>WDL</td><td>₹50</td></tr>
         </table>
-        <br>Available Bal: $${accountBalance}
+        <br>Available Bal: ₹₹{accountBalance}
     `;
     screenInput.innerHTML = "";
 }
