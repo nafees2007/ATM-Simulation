@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATM Interface</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="atm-container">
+    
+    <!-- LOGIN SECTION -->
+    <div id="login-section">
+        <div class="atm-screen mb-4">
+            <div class="screen-message" id="login-msg">
+                WELCOME TO SECURE BANK<br><br>
+                Please enter your details to continue.
+            </div>
+        </div>
+        
+        <div class="login-form">
+            <input type="text" id="card-number" class="neon-input" placeholder="Enter Card Number (e.g. 1234)" maxlength="16" autocomplete="off">
+            <input type="password" id="pin-number" class="neon-input mt-3" placeholder="Enter 4-Digit PIN (e.g. 0000)" maxlength="4" autocomplete="off">
+            <button class="action-btn mt-4 w-100" style="font-size: 1.2rem; padding: 15px;" onclick="attemptLogin()">SECURE LOGIN</button>
+        </div>
+    </div>
+
+    <!-- DASHBOARD SECTION (Hidden by default) -->
+    <div id="dashboard-section" style="display: none;">
+        <!-- ATM Screen Area -->
+        <div class="atm-screen" id="atm-screen">
+            <div class="screen-message" id="screen-message">WELCOME, CERO<br>Please select a transaction</div>
+            <div class="screen-input-display" id="screen-input"></div>
+        </div>
+
+        <div class="row">
+            <!-- Left Side: Features -->
+            <div class="col-md-5">
+                <button class="action-btn" onclick="selectAction('withdraw')">Cash Withdrawal</button>
+                <button class="action-btn" onclick="selectAction('deposit')">Cash Deposit</button>
+                <button class="action-btn" onclick="selectAction('balance')">Balance Enquiry</button>
+                <button class="action-btn" onclick="selectAction('statement')">Mini Statement</button>
+                <button class="action-btn" onclick="selectAction('pin')">PIN Change</button>
+                <button class="action-btn btn-cancel mt-3" onclick="logout()">LOGOUT</button>
+            </div>
+
+            <!-- Right Side: Numeric Keypad -->
+            <div class="col-md-7">
+                <div class="row g-2 mb-2">
+                    <div class="col-4"><button class="keypad-btn" onclick="pressKey('1')">1</button></div>
+                    <div class="col-4"><button class="keypad-btn" onclick="pressKey('2')">2</button></div>
+                    <div class="col-4"><button class="keypad-btn" onclick="pressKey('3')">3</button></div>
+                </div>
+                <div class="row g-2 mb-2">
+                    <div class="col-4"><button class="keypad-btn" onclick="pressKey('4')">4</button></div>
+                    <div class="col-4"><button class="keypad-btn" onclick="pressKey('5')">5</button></div>
+                    <div class="col-4"><button class="keypad-btn" onclick="pressKey('6')">6</button></div>
+                </div>
+                <div class="row g-2 mb-2">
+                    <div class="col-4"><button class="keypad-btn" onclick="pressKey('7')">7</button></div>
+                    <div class="col-4"><button class="keypad-btn" onclick="pressKey('8')">8</button></div>
+                    <div class="col-4"><button class="keypad-btn" onclick="pressKey('9')">9</button></div>
+                </div>
+                <div class="row g-2">
+                    <div class="col-4"><button class="keypad-btn btn-clear" onclick="clearInput()">CLEAR</button></div>
+                    <div class="col-4"><button class="keypad-btn" onclick="pressKey('0')">0</button></div>
+                    <div class="col-4"><button class="keypad-btn btn-enter" onclick="submitInput()">ENTER</button></div>
+                </div>
+                <div class="row g-2 mt-2">
+                    <div class="col-12"><button class="keypad-btn btn-cancel" onclick="resetATM()">CANCEL / HOME</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Custom JavaScript -->
+<script src="script.js"></script>
+</body>
+</html>
