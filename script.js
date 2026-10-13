@@ -179,7 +179,7 @@ function showMiniStatement() {
             <tr><td>Oct 10</td><td>DEP</td><td>₹10,000</td></tr>
             <tr><td>Oct 05</td><td>WDL</td><td>₹500</td></tr>
         </table>
-        <br><span style="color:#888;">Current Bal: $${accountBalance.toLocaleString('en-IN')}</span>
+        <br><span style="color:#888;">Current Bal: ${accountBalance.toLocaleString('en-IN')}</span>
     `;
     screenInput.innerHTML = "";
 }
