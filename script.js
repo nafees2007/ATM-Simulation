@@ -151,11 +151,11 @@ function toggleBalance() {
 }
 
 function renderBalance() {
-    const displayAmount = isBalanceVisible ? `$${accountBalance}` : "****";
+    const displayAmount = isBalanceVisible ? `₹{accountBalance}` : "****";
     const iconClass = isBalanceVisible ? "fa-eye-slash" : "fa-eye";
     
     screenMsg.innerHTML = `AVAILABLE BALANCE:<br><br>
-        <span style="font-size: 2rem;">$${displayAmount}</span> 
+        <span style="font-size: 2rem;">₹{displayAmount}</span> 
         <i class="fas ${iconClass} eye-icon" onclick="toggleBalance()" title="Show/Hide Balance"></i>`;
 }
 
