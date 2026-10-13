@@ -1,174 +1,251 @@
-/* Dark Theme & Layout */
+/* --- Global & Background --- */
 body {
-    background-color: #121212;
-    color: #ffffff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0b0c10;
+    color: #c5c6c7;
+    font-family: 'Segoe UI', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
+    overflow: hidden;
 }
 
-.atm-container {
-    background: #1e1e1e;
-    border-radius: 20px;
-    padding: 30px;
+.bg-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,255,255,0.15) 0%, rgba(0,0,0,0) 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+/* --- Main ATM Chassis (Glassmorphism) --- */
+.atm-machine {
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(102, 252, 241, 0.2);
+    border-radius: 24px;
+    padding: 25px;
     width: 100%;
-    max-width: 800px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 255, 255, 0.1);
-    border: 1px solid #333;
+    max-width: 850px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 
+                inset 0 1px 1px rgba(255, 255, 255, 0.1),
+                0 0 30px rgba(102, 252, 241, 0.1);
 }
 
-/* Login Inputs */
-.login-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 20px;
-}
-
-.neon-input {
-    width: 100%;
-    background-color: #0a192f;
-    border: 2px solid #333;
-    color: #0ff;
-    padding: 15px;
-    font-size: 1.2rem;
-    border-radius: 8px;
+.bank-header {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.6rem;
+    color: #66fcf1;
     text-align: center;
-    letter-spacing: 2px;
-    font-family: 'Courier New', Courier, monospace;
-    transition: all 0.3s ease;
-    outline: none;
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
 }
 
-.neon-input::placeholder {
-    color: rgba(0, 255, 255, 0.3);
-    letter-spacing: 1px;
-}
-
-.neon-input:focus {
-    border-color: #0ff;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
-    background-color: #0d233a;
-}
-
-/* Neon ATM Screen */
+/* --- Digital Screen --- */
 .atm-screen {
-    background-color: #0a192f;
-    border: 2px solid #0ff;
-    border-radius: 10px;
-    height: 250px;
-    padding: 20px;
-    font-family: 'Courier New', Courier, monospace;
-    color: #0ff;
-    text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
-    margin-bottom: 30px;
+    background: #02111d;
+    border: 3px solid #1f2833;
+    border-radius: 12px;
+    height: 200px;
+    padding: 15px;
+    font-family: 'Share Tech Mono', monospace;
+    color: #66fcf1;
+    text-shadow: 0 0 6px rgba(102, 252, 241, 0.7);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.2);
+    position: relative;
+    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8),
+                0 0 15px rgba(102, 252, 241, 0.3);
+    overflow: hidden;
+}
+
+/* Subtle CRT scanline effect */
+.screen-scanline {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 4px, 3px 100%;
+    pointer-events: none;
+    z-index: 10;
 }
 
 .screen-message {
     font-size: 1.2rem;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+    z-index: 2;
 }
 
 .screen-input-display {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: bold;
-    letter-spacing: 2px;
+    letter-spacing: 4px;
     min-height: 40px;
+    z-index: 2;
 }
 
-/* Side Action Buttons */
-.action-btn {
-    background-color: #2a2a2a;
-    color: #fff;
-    border: 1px solid #444;
-    border-radius: 5px;
-    padding: 15px 10px;
+/* --- Login Form Styling --- */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.input-group-custom {
+    position: relative;
     width: 100%;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 0.9rem;
+}
+
+.input-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #66fcf1;
+    font-size: 1.2rem;
+}
+
+.neon-input {
+    width: 100%;
+    background-color: rgba(2, 17, 29, 0.6);
+    border: 2px solid #1f2833;
+    color: #66fcf1;
+    padding: 14px 20px 14px 55px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    letter-spacing: 3px;
+    font-family: 'Share Tech Mono', monospace;
     transition: all 0.3s ease;
+    outline: none;
+}
+
+.neon-input:focus {
+    border-color: #66fcf1;
+    box-shadow: 0 0 20px rgba(102, 252, 241, 0.2);
+    background-color: rgba(2, 17, 29, 0.9);
+}
+
+.auth-btn {
+    background: linear-gradient(135deg, #1f2833, #0b0c10);
+    color: #66fcf1;
+    border: 1px solid #66fcf1;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 2px;
+    padding: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.auth-btn:hover {
+    background: #66fcf1;
+    color: #0b0c10;
+    box-shadow: 0 0 25px rgba(102, 252, 241, 0.6);
+}
+
+/* --- Action Buttons (Left Side) --- */
+.action-btn {
+    background: #1f2833;
+    color: #c5c6c7;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 12px 10px;
+    width: 100%;
+    margin-bottom: 8px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-align: left;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.action-btn i {
+    width: 25px;
+    color: #66fcf1;
+    margin-right: 8px;
 }
 
 .action-btn:hover {
-    background-color: #0ff;
-    color: #000;
-    box-shadow: 0 0 15px #0ff;
-    border-color: #0ff;
-}
-
-/* Numeric Keypad Base Styling */
-.keypad-btn {
-    background-color: #252525;
-    color: #e0e0e0;
-    border: 1px solid #444;
-    border-radius: 8px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    padding: 15px 0;
-    width: 100%;
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-/* Keypad Hover Effect (Neon Glow) */
-.keypad-btn:hover {
-    color: #0ff;
-    border-color: #0ff;
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
-    background-color: #2a2a2a;
-}
-
-/* Keypad Active/Click Effect (Intense Glow) */
-.keypad-btn:active {
-    background-color: #0ff;
-    color: #000;
-    box-shadow: 0 0 20px #0ff, inset 0 0 10px rgba(0,0,0,0.5);
-    transform: scale(0.95);
-}
-
-/* Special Buttons Colors */
-.btn-clear { border-color: #ffc107; color: #ffc107; }
-.btn-clear:hover { color: #000; background-color: #ffc107; box-shadow: 0 0 15px #ffc107; }
-
-.btn-cancel { border-color: #dc3545; color: #dc3545; }
-.btn-cancel:hover { color: #000; background-color: #dc3545; box-shadow: 0 0 15px #dc3545; }
-
-.btn-enter { border-color: #198754; color: #198754; }
-.btn-enter:hover { color: #000; background-color: #198754; box-shadow: 0 0 15px #198754; }
-
-/* Eye Icon for Balance Toggle */
-.eye-icon {
-    cursor: pointer;
-    margin-left: 10px;
-    color: #0ff;
-    transition: color 0.3s ease;
-}
-
-.eye-icon:hover {
+    background: rgba(102, 252, 241, 0.1);
+    border-color: #66fcf1;
     color: #fff;
-    text-shadow: 0 0 10px #fff;
+    transform: translateX(5px);
 }
 
-/* Mini Statement Table */
+/* --- 3D Numeric Keypad --- */
+.keypad-btn {
+    background: linear-gradient(to bottom, #2a2d34, #1f2833);
+    color: #fff;
+    border: 1px solid #0b0c10;
+    border-bottom: 4px solid #0b0c10;
+    border-radius: 8px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    padding: 12px 0;
+    width: 100%;
+    transition: all 0.1s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+}
+
+.keypad-btn:hover {
+    color: #66fcf1;
+    background: linear-gradient(to bottom, #32363f, #26313e);
+}
+
+/* Realistic physical push effect */
+.keypad-btn:active {
+    transform: translateY(4px);
+    border-bottom: 0px solid #0b0c10;
+    margin-top: 4px;
+    margin-bottom: -4px;
+    background: #66fcf1;
+    color: #0b0c10;
+    box-shadow: 0 0 15px #66fcf1;
+}
+
+/* Special Keys */
+.btn-clear { color: #f2a900; }
+.btn-clear:active { background: #f2a900; box-shadow: 0 0 15px #f2a900; color: #000; }
+
+.btn-enter { color: #45a29e; }
+.btn-enter:active { background: #45a29e; box-shadow: 0 0 15px #45a29e; color: #000; }
+
+.btn-home { color: #c5c6c7; font-size: 1rem; }
+.btn-cancel { border-color: #ed4c67; color: #ed4c67; text-align: center; margin-top: 5px; }
+.btn-cancel i { color: #ed4c67; }
+.btn-cancel:hover { background: #ed4c67; color: #fff; border-color: #ed4c67; transform: none;}
+.btn-cancel:hover i { color: #fff; }
+
+/* --- Table & Extras --- */
 .statement-table {
-    color: #0ff;
     width: 100%;
     font-size: 0.9rem;
     text-align: left;
+    border-collapse: collapse;
 }
-
 .statement-table th {
-    border-bottom: 1px solid #0ff; 
+    border-bottom: 1px dashed #66fcf1; 
     padding-bottom: 5px;
+    color: #fff;
 }
+.statement-table td { padding: 4px 0; }
+
+.eye-icon { cursor: pointer; margin-left: 15px; color: #66fcf1; }
+.eye-icon:hover { color: #fff; text-shadow: 0 0 12px #fff; }
+
+/* Animations */
+.fade-in { animation: fadeIn 0.4s ease-in; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
