@@ -128,12 +128,12 @@ function submitInput() {
                 screenMsg.innerHTML = "<span style='color: #ed4c67;'>ERROR: MULTIPLES OF 100 ONLY</span>";
             } else {
                 accountBalance -= amount;
-                screenMsg.innerHTML = `<span style='color: #45a29e;'>TRANSACTION SUCCESSFUL.</span><br>Dispensing ${amount.toLocaleString('en-IN')}...`;
+                screenMsg.innerHTML = `<span style='color: #45a29e;'>TRANSACTION SUCCESSFUL.</span><br>Dispensing ₹${amount.toLocaleString('en-IN')}...`;
             }
         } 
         else if (currentAction === 'deposit') {
             accountBalance += amount;
-            screenMsg.innerHTML = `<span style='color: #45a29e;'>DEPOSIT SUCCESSFUL.</span><br>Added ${amount.toLocaleString('en-IN')} to account.`;
+            screenMsg.innerHTML = `<span style='color: #45a29e;'>DEPOSIT SUCCESSFUL.</span><br>Added ₹${amount.toLocaleString('en-IN')} to account.`;
         }
         else if (currentAction === 'pin') {
             if(inputValue.length === 4) {
@@ -179,7 +179,7 @@ function showMiniStatement() {
             <tr><td>Oct 10</td><td>DEP</td><td>₹10,000</td></tr>
             <tr><td>Oct 05</td><td>WDL</td><td>₹500</td></tr>
         </table>
-        <br><span style="color:#888;">Current Bal: $${accountBalance.toLocaleString('en-IN')}</span>
+        <br><span style="color:#888;">Current Bal: ₹${accountBalance.toLocaleString('en-IN')}</span>
     `;
     screenInput.innerHTML = "";
 }
