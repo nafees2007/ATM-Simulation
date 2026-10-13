@@ -5,7 +5,7 @@ const validPin = "0000";
 // --- ATM State Variables ---
 let currentAction = null;
 let inputValue = "";
-let accountBalance = 5000;
+let accountBalance = 50000; // Increased to 50,000 for better INR testing
 let isBalanceVisible = false;
 
 // --- DOM Elements ---
@@ -14,37 +14,45 @@ const dashboardSection = document.getElementById('dashboard-section');
 const screenMsg = document.getElementById('screen-message');
 const screenInput = document.getElementById('screen-input');
 const loginMsg = document.getElementById('login-msg');
+const loginBtn = document.getElementById('login-btn');
 
 // ==========================================
-// 1. LOGIN & LOGOUT LOGIC
+// 1. ADVANCED LOGIN LOGIC
 // ==========================================
 function attemptLogin() {
     const cardInput = document.getElementById('card-number').value;
     const pinInput = document.getElementById('pin-number').value;
 
-    if (cardInput === validCard && pinInput === validPin) {
-        // Success: Hide login, show dashboard
-        loginSection.style.display = 'none';
-        dashboardSection.style.display = 'block';
-        resetATM(); 
-    } else {
-        // Fail: Show error on the login screen
-        loginMsg.innerHTML = "<span style='color: #ff4444;'>INVALID CARD OR PIN.</span><br>Try Card: 1234, PIN: 0000";
-    }
+    // Loading Simulation Effect
+    loginBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> VERIFYING...';
+    loginBtn.style.pointerEvents = 'none';
+
+    setTimeout(() => {
+        if (cardInput === validCard && pinInput === validPin) {
+            // Success
+            loginSection.style.display = 'none';
+            dashboardSection.style.display = 'block';
+            resetATM(); 
+        } else {
+            // Fail
+            loginMsg.innerHTML = "<span style='color: #ed4c67;'>AUTH FAILED.</span><br>Verify credentials.<br><span style='font-size:0.9rem; color:#888;'>(Hint: 1234 / 0000)</span>";
+        }
+        
+        // Reset button state
+        loginBtn.innerHTML = '<span>SECURE LOGIN</span> <i class="fa-solid fa-fingerprint"></i>';
+        loginBtn.style.pointerEvents = 'auto';
+    }, 1200); // 1.2 second fake loading delay
 }
 
 function logout() {
-    // Hide dashboard, show login
     dashboardSection.style.display = 'none';
     loginSection.style.display = 'block';
     
-    // Clear inputs
     document.getElementById('card-number').value = "";
     document.getElementById('pin-number').value = "";
-    loginMsg.innerHTML = "WELCOME TO SECURE BANK<br><br>Please enter your details to continue.";
+    loginMsg.innerHTML = "SYSTEM READY<br><br>Please insert card details.";
     
-    // Reset state
-    accountBalance = 5000;
+    accountBalance = 50000;
 }
 
 // ==========================================
@@ -58,10 +66,10 @@ function selectAction(action) {
 
     switch(action) {
         case 'withdraw':
-            screenMsg.innerHTML = "ENTER AMOUNT TO WITHDRAW:<br>(Multiple of 100)";
+            screenMsg.innerHTML = "WITHDRAWAL AMOUNT:<br><span style='font-size:1rem; color:#888;'>(Multiples of 100)</span>";
             break;
         case 'deposit':
-            screenMsg.innerHTML = "ENTER AMOUNT TO DEPOSIT:";
+            screenMsg.innerHTML = "DEPOSIT AMOUNT:";
             break;
         case 'balance':
             showBalanceScreen();
@@ -99,7 +107,7 @@ function resetATM() {
     currentAction = null;
     inputValue = "";
     isBalanceVisible = false;
-    screenMsg.innerHTML = "WELCOME, CERO<br>Please select a transaction";
+    screenMsg.innerHTML = "WELCOME, CERO<br><br>Please select a transaction.";
     screenInput.innerHTML = "";
 }
 
@@ -108,33 +116,36 @@ function submitInput() {
 
     let amount = parseInt(inputValue);
 
-    if (currentAction === 'withdraw') {
-        if (amount > accountBalance) {
-            screenMsg.innerHTML = "<span style='color: #ff4444;'>INSUFFICIENT FUNDS</span>";
-            screenInput.innerHTML = "";
-        } else if (amount % 100 !== 0) {
-            screenMsg.innerHTML = "<span style='color: #ff4444;'>PLEASE ENTER MULTIPLES OF 100</span>";
-            screenInput.innerHTML = "";
-        } else {
-            accountBalance -= amount;
-            screenMsg.innerHTML = `<span style='color: #00ff00;'>MONEY WITHDRAWN SUCCESSFULLY.</span><br>Please collect your cash.`;
-            screenInput.innerHTML = "";
+    screenMsg.innerHTML = "<span style='color:#f2a900;'>PROCESSING...</span>";
+    screenInput.innerHTML = "";
+
+    // Simulate network delay for transactions
+    setTimeout(() => {
+        if (currentAction === 'withdraw') {
+            if (amount > accountBalance) {
+                screenMsg.innerHTML = "<span style='color: #ed4c67;'>ERROR: INSUFFICIENT FUNDS</span>";
+            } else if (amount % 100 !== 0) {
+                screenMsg.innerHTML = "<span style='color: #ed4c67;'>ERROR: MULTIPLES OF 100 ONLY</span>";
+            } else {
+                accountBalance -= amount;
+                screenMsg.innerHTML = `<span style='color: #45a29e;'>TRANSACTION SUCCESSFUL.</span><br>Dispensing ₹${amount.toLocaleString('en-IN')}...`;
+            }
+        } 
+        else if (currentAction === 'deposit') {
+            accountBalance += amount;
+            screenMsg.innerHTML = `<span style='color: #45a29e;'>DEPOSIT SUCCESSFUL.</span><br>Added ₹${amount.toLocaleString('en-IN')} to account.`;
         }
-    } 
-    else if (currentAction === 'deposit') {
-        accountBalance += amount;
-        screenMsg.innerHTML = `<span style='color: #00ff00;'>$$ {amount} DEPOSITED SUCCESSFULLY.</span>`;
-        screenInput.innerHTML = "";
-    }
-    else if (currentAction === 'pin') {
-        if(inputValue.length === 4) {
-            screenMsg.innerHTML = "<span style='color: #00ff00;'>PIN CHANGED SUCCESSFULLY.</span>";
-            screenInput.innerHTML = "";
+        else if (currentAction === 'pin') {
+            if(inputValue.length === 4) {
+                screenMsg.innerHTML = "<span style='color: #45a29e;'>PIN UPDATED SUCCESSFULLY.</span>";
+            } else {
+                screenMsg.innerHTML = "<span style='color: #ed4c67;'>ERROR: PIN MUST BE 4 DIGITS</span>";
+            }
         }
-    }
-    
-    inputValue = ""; 
-    currentAction = null; 
+        
+        inputValue = ""; 
+        currentAction = null; 
+    }, 800);
 }
 
 // ==========================================
@@ -151,23 +162,24 @@ function toggleBalance() {
 }
 
 function renderBalance() {
-    const displayAmount = isBalanceVisible ? `₹{accountBalance}` : "****";
+    // Uses 'en-IN' for the Indian comma system (e.g., ₹1,00,000)
+    const displayAmount = isBalanceVisible ? `₹${accountBalance.toLocaleString('en-IN')}` : "****";
     const iconClass = isBalanceVisible ? "fa-eye-slash" : "fa-eye";
     
     screenMsg.innerHTML = `AVAILABLE BALANCE:<br><br>
-        <span style="font-size: 2rem;">₹{displayAmount}</span> 
-        <i class="fas ${iconClass} eye-icon" onclick="toggleBalance()" title="Show/Hide Balance"></i>`;
+        <span style="font-size: 2.2rem; color: #fff;">${displayAmount}</span> 
+        <i class="fas ${iconClass} eye-icon" onclick="toggleBalance()" title="Toggle View"></i>`;
 }
 
 function showMiniStatement() {
     screenMsg.innerHTML = `
         <table class="statement-table">
-            <tr><th>Date</th><th>Type</th><th>Amount</th></tr>
-            <tr><td>12-Oct</td><td>WDL</td><td>₹200</td></tr>
-            <tr><td>10-Oct</td><td>DEP</td><td>₹1000</td></tr>
-            <tr><td>05-Oct</td><td>WDL</td><td>₹50</td></tr>
+            <tr><th>DATE</th><th>TYPE</th><th>AMOUNT</th></tr>
+            <tr><td>Oct 12</td><td>WDL</td><td>₹2,500</td></tr>
+            <tr><td>Oct 10</td><td>DEP</td><td>₹10,000</td></tr>
+            <tr><td>Oct 05</td><td>WDL</td><td>₹500</td></tr>
         </table>
-        <br>Available Bal: ₹₹{accountBalance}
+        <br><span style="color:#888;">Current Bal: ₹${accountBalance.toLocaleString('en-IN')}</span>
     `;
     screenInput.innerHTML = "";
 }
