@@ -123,7 +123,7 @@ function submitInput() {
     } 
     else if (currentAction === 'deposit') {
         accountBalance += amount;
-        screenMsg.innerHTML = `<span style='color: #00ff00;'>₹₹{amount} DEPOSITED SUCCESSFULLY.</span>`;
+        screenMsg.innerHTML = `<span style='color: #00ff00;'>$${amount} DEPOSITED SUCCESSFULLY.</span>`;
         screenInput.innerHTML = "";
     }
     else if (currentAction === 'pin') {
@@ -151,7 +151,7 @@ function toggleBalance() {
 }
 
 function renderBalance() {
-    const displayAmount = isBalanceVisible ? `₹₹{accountBalance}` : "****";
+    const displayAmount = isBalanceVisible ? `$${accountBalance}` : "****";
     const iconClass = isBalanceVisible ? "fa-eye-slash" : "fa-eye";
     
     screenMsg.innerHTML = `AVAILABLE BALANCE:<br><br>
