@@ -123,7 +123,7 @@ function submitInput() {
     } 
     else if (currentAction === 'deposit') {
         accountBalance += amount;
-        screenMsg.innerHTML = `<span style='color: #00ff00;'>$${amount} DEPOSITED SUCCESSFULLY.</span>`;
+        screenMsg.innerHTML = `<span style='color: #00ff00;'>$$ {amount} DEPOSITED SUCCESSFULLY.</span>`;
         screenInput.innerHTML = "";
     }
     else if (currentAction === 'pin') {
@@ -155,7 +155,7 @@ function renderBalance() {
     const iconClass = isBalanceVisible ? "fa-eye-slash" : "fa-eye";
     
     screenMsg.innerHTML = `AVAILABLE BALANCE:<br><br>
-        <span style="font-size: 2rem;">${displayAmount}</span> 
+        <span style="font-size: 2rem;">$${displayAmount}</span> 
         <i class="fas ${iconClass} eye-icon" onclick="toggleBalance()" title="Show/Hide Balance"></i>`;
 }
 
