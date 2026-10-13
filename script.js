@@ -163,11 +163,11 @@ function toggleBalance() {
 
 function renderBalance() {
     // Uses 'en-IN' for the Indian comma system (e.g., ₹1,00,000)
-    const displayAmount = isBalanceVisible ? `$${accountBalance.toLocaleString('en-IN')}` : "****";
+    const displayAmount = isBalanceVisible ? `₹${accountBalance.toLocaleString('en-IN')}` : "****";
     const iconClass = isBalanceVisible ? "fa-eye-slash" : "fa-eye";
     
     screenMsg.innerHTML = `AVAILABLE BALANCE:<br><br>
-        <span style="font-size: 2.2rem; color: #fff;">$${displayAmount}</span> 
+        <span style="font-size: 2.2rem; color: #fff;">${displayAmount}</span> 
         <i class="fas ${iconClass} eye-icon" onclick="toggleBalance()" title="Toggle View"></i>`;
 }
 
