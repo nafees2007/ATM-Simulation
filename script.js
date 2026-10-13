@@ -128,12 +128,12 @@ function submitInput() {
                 screenMsg.innerHTML = "<span style='color: #ed4c67;'>ERROR: MULTIPLES OF 100 ONLY</span>";
             } else {
                 accountBalance -= amount;
-                screenMsg.innerHTML = `<span style='color: #45a29e;'>TRANSACTION SUCCESSFUL.</span><br>Dispensing $${amount.toLocaleString('en-IN')}...`;
+                screenMsg.innerHTML = `<span style='color: #45a29e;'>TRANSACTION SUCCESSFUL.</span><br>Dispensing ${amount.toLocaleString('en-IN')}...`;
             }
         } 
         else if (currentAction === 'deposit') {
             accountBalance += amount;
-            screenMsg.innerHTML = `<span style='color: #45a29e;'>DEPOSIT SUCCESSFUL.</span><br>Added $${amount.toLocaleString('en-IN')} to account.`;
+            screenMsg.innerHTML = `<span style='color: #45a29e;'>DEPOSIT SUCCESSFUL.</span><br>Added ${amount.toLocaleString('en-IN')} to account.`;
         }
         else if (currentAction === 'pin') {
             if(inputValue.length === 4) {
@@ -163,11 +163,11 @@ function toggleBalance() {
 
 function renderBalance() {
     // Uses 'en-IN' for the Indian comma system (e.g., ₹1,00,000)
-    const displayAmount = isBalanceVisible ? `₹${accountBalance.toLocaleString('en-IN')}` : "****";
+    const displayAmount = isBalanceVisible ? `$${accountBalance.toLocaleString('en-IN')}` : "****";
     const iconClass = isBalanceVisible ? "fa-eye-slash" : "fa-eye";
     
     screenMsg.innerHTML = `AVAILABLE BALANCE:<br><br>
-        <span style="font-size: 2.2rem; color: #fff;">${displayAmount}</span> 
+        <span style="font-size: 2.2rem; color: #fff;">$${displayAmount}</span> 
         <i class="fas ${iconClass} eye-icon" onclick="toggleBalance()" title="Toggle View"></i>`;
 }
 
@@ -179,7 +179,7 @@ function showMiniStatement() {
             <tr><td>Oct 10</td><td>DEP</td><td>₹10,000</td></tr>
             <tr><td>Oct 05</td><td>WDL</td><td>₹500</td></tr>
         </table>
-        <br><span style="color:#888;">Current Bal: ₹${accountBalance.toLocaleString('en-IN')}</span>
+        <br><span style="color:#888;">Current Bal: $${accountBalance.toLocaleString('en-IN')}</span>
     `;
     screenInput.innerHTML = "";
 }
